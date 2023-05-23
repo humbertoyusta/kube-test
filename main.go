@@ -1,10 +1,10 @@
 package main
 
 import (
-	encoding/json
-	fmt
-	log
-	net/http
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
 )
 
 type Simple struct {
@@ -14,7 +14,7 @@ type Simple struct {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	simple := Simple{Hello, World, r.Host}
+	simple := Simple{"Hello", "World", r.Host}
 
 	jsonOutput, _ := json.Marshal(simple)
 
@@ -22,7 +22,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fmt.Println(Server started on port 4444)
-	http.HandleFunc(/api, handler)
-	log.Fatal(http.ListenAndServe(:4444, nil))
+	fmt.Println("Server started on port 4444")
+	http.HandleFunc("/api", handler)
+	log.Fatal(http.ListenAndServe(":4444", nil))
 }
