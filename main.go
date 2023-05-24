@@ -17,7 +17,7 @@ func SimpleFactory(host string) Simple {
 	return Simple{
 		Name:        "Hello",
 		Description: "Humberto Yusta",
-		Url:         "host",
+		Url:         host,
 	}
 }
 
