@@ -13,7 +13,7 @@ type Simple struct {
 	Url         string
 }
 
-func simpleFactory(host string) Simple {
+func SimpleFactory(host string) Simple {
 	return Simple{
 		Name:        "Hello",
 		Description: "Humberto Yusta",
@@ -22,7 +22,7 @@ func simpleFactory(host string) Simple {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	simple := simpleFactory(r.Host)
+	simple := SimpleFactory(r.Host)
 
 	jsonOutput, _ := json.Marshal(simple)
 
