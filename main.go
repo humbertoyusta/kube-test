@@ -13,8 +13,16 @@ type Simple struct {
 	Url         string
 }
 
+func simpleFactory(host string) Simple {
+	return Simple{
+		Name:        "Hello",
+		Description: "Humberto Yusta",
+		Url:         host,
+	}
+}
+
 func handler(w http.ResponseWriter, r *http.Request) {
-	simple := Simple{"Hello", "Humberto Yusta", r.Host}
+	simple := simpleFactory(r.Host)
 
 	jsonOutput, _ := json.Marshal(simple)
 
