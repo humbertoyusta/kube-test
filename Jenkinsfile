@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Test connection') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'target-ssh-key', keyFileVariable: 'keyFile', userNameVariable: 'userName']) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'target-ssh-key', keyFileVariable: 'keyFile', userNameVariable: 'userName')]) {
                     sh 'scp -i ${keyFile} main 192.168.105.3:'
                 }
             }
