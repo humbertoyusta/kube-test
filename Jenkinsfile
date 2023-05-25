@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Test connection') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'target-key', keyFileVariable: 'keyFile', userNameVariable: 'userName')]) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'target-key', keyFileVariable: 'keyFile', usernameVariable: 'userName')]) {
                     sh 'mkdir -p $HOME/.ssh'
                     sh 'echo ${userName}'
                     sh 'ssh-keyscan 192.168.105.3 > $HOME/.ssh/known_hosts'
