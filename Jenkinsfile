@@ -18,9 +18,10 @@ pipeline {
             }
         }
         stage('Test connection') {
-            steps {
-                sh 'ssh-keyscan 192.168.105.3 > ~/.ssh/known_hosts'
-                sh 'scp -i ~/.ssh/id_rsa hello.txt vagrant@192.168.105.3'
+            withCredentials([sshUserPrivateKey(credentialsId: 'target-ssh-key', keyFileVariable: 'keyFile', userNameVariable: 'userName']) {
+                steps {
+                    sh 'scp -i ${keyFile} main 192.168.105.3:'
+                }
             }
         }
     }
