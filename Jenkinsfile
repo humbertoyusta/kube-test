@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Tests') {
             steps {
-                sh 'rm -f go.mod
+                sh 'rm -f go.mod'
                 sh 'go mod init app'
                 sh 'go test .'
             }
