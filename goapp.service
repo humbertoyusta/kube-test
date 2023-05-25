@@ -1,0 +1,10 @@
+[Unit]
+Description=Go App Service
+After=network.target
+
+[Service]
+ExecStart=/home/humbertoyusta.linux/main
+Type=simple
+
+[Install]
+WantedBy=default.target
