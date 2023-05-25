@@ -21,6 +21,7 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'target-ssh-key', keyFileVariable: 'keyFile', userNameVariable: 'userName')]) {
                     sh 'mkdir -p $HOME/.ssh'
+                    sh 'echo ${userName}'
                     sh 'ssh-keyscan 192.168.105.3 > $HOME/.ssh/known_hosts'
                     sh 'scp -i ${keyFile} main ${userName}@192.168.105.3:'
                 }
