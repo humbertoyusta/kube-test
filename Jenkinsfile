@@ -15,7 +15,6 @@ pipeline {
         stage('Tests') {
             steps {
                 dir("go-test") {
-                    sh 'rm -f go.mod'
                     sh 'go mod init app'
                     sh 'go test .'
                 }
