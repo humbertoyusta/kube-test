@@ -17,5 +17,11 @@ pipeline {
                 sh 'go test .'
             }
         }
+        stage('Test connection') {
+            steps {
+                sh 'ssh-keyscan 192.168.105.3 > ~/.ssh/known_hosts'
+                sh 'scp -i ~/.ssh/id_rsa hello.txt vagrant@192.168.105.3'
+            }
+        }
     }
 }
