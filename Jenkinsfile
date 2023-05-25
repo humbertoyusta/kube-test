@@ -24,6 +24,11 @@ pipeline {
                     sh 'ssh-keyscan 192.168.105.3 > $HOME/.ssh/known_hosts'
                     sh 'scp -i ${keyFile} main ${userName}@192.168.105.3:'
                     sh 'scp -i ${keyFile} goapp.service ${userName}@192.168.105.3:'
+                    
+                    sh 'ssh -l ${userName} -i ${keyFile} -C sudo cp goapp.service /etc/systemd/system/'
+                    sh 'ssh -l ${userName} -i ${keyFile} -C sudo systemctl daemon-reload'
+                    sh 'ssh -l ${userName} -i ${keyFile} -C sudo systemctl start goapp.service'
+                    sh 'ssh -l ${userName} -i ${keyFile} -C sudo systemctl enable goapp.service'
                 }
             }
         }
