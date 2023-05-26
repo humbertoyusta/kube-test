@@ -23,7 +23,11 @@ pipeline {
                     sh 'mkdir -p $HOME/.ssh'
                     sh 'ssh-keyscan 192.168.105.3 > $HOME/.ssh/known_hosts'
                     
-                    sh 'ssh ${userName}@192.168.105.3 -i ${keyFile} -C sudo systemctl stop goapp.service'
+                    sh '''
+                        if ssh ${userName}@192.168.105.3 -i ${keyFile} -C "systemctl --quiet is-active goapp.service"; then
+                            ssh ${userName}@192.168.105.3 -i ${keyFile} -C sudo systemctl stop goapp.service
+                        fi
+                    '''
                     
                     sh 'scp -i ${keyFile} main ${userName}@192.168.105.3:'
                     sh 'scp -i ${keyFile} goapp.service ${userName}@192.168.105.3:'
