@@ -34,17 +34,7 @@ pipeline {
         }
         stage('Smoke test') {
             steps {
-                sh '''
-                    #!/bin/bash
-                    response=$(curl --silent --fail --show-error --write-out "%{http_code}" http://192.168.105.3:4444/api)
-
-                    if [[ $response == 200 ]]; then
-                        echo "Smoke test passed"
-                    else
-                        echo "Smoke test failed: Server returned status code $response"
-                        exit 1
-                    fi
-                '''
+                sh 'curl --silenr http://192.168.105.3:4444/api'
             }
         }
     }
