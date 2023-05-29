@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    displayName 'python-docker-pipeline'
     stages {
         stage('Build docker image') {
             steps {
