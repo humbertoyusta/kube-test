@@ -4,4 +4,4 @@ RUN pip install flask
 
 COPY main.py /main.py
 
-CMD ["python3", "./main"]
+CMD ["python3", "./main.py"]
