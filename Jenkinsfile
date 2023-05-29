@@ -28,7 +28,7 @@ pipeline {
                     sh 'ssh-keyscan 192.168.105.3 > $HOME/.ssh/known_hosts'
                     sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker rm --force goapp || true'
                     sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker pull ttl.sh/goapp-hyusta:1h'
-                    sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker run --detach --name goapp ttl.sh/goapp-hyusta:1h'
+                    sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker run --detach --publish 4444:4444 --name goapp ttl.sh/goapp-hyusta:1h'
                 }
             }
         }
