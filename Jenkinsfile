@@ -16,7 +16,7 @@ pipeline {
                 withCredentials([sshUserPrivateKey(credentialsId: 'target-key', keyFileVariable: 'keyFile', usernameVariable: 'userName')]) {
                     sh 'mkdir --parents $HOME/.ssh'
                     sh 'ssh-keyscan 192.168.105.3 > $HOME/.ssh/known_hosts'
-                    sh 'ssh -l ${userNam`e} -i ${keyFile} 192.168.105.3 -C docker pull ttl.sh/pythonapp-hyusta:1h'
+                    sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker pull ttl.sh/pythonapp-hyusta:1h'
                 }
             }
         }
