@@ -1,5 +1,7 @@
-FROM ubuntu
+FROM python:3.11-alpine3.18
 
-COPY main main
+RUN pip install flask
 
-CMD ["./main"]
+COPY main.py /main.py
+
+CMD ["python3", "./main"]
