@@ -24,7 +24,7 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'target-key', keyFileVariable: 'keyFile', usernameVariable: 'userName')]) {
                     sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker rm --force pythonapp || true'
-                    sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker run --detach --name pythonapp ttl.sh/pythonapp-hyusta:1h'
+                    sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker run --detach --publish 4444:4444 --name pythonapp ttl.sh/pythonapp-hyusta:1h'
                 }
             }
         }
