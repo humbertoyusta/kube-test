@@ -32,9 +32,9 @@ pipeline {
                 }
             }
         }
-        stage('Smoke test') {
+        stage('Health test') {
             steps {
-                sh 'curl --silenr http://192.168.105.3:4444/api'
+                sh 'curl --silent http://192.168.105.3:4444/api'
             }
         }
     }
