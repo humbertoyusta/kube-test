@@ -27,7 +27,6 @@ pipeline {
                     sh 'mkdir -p $HOME/.ssh'
                     sh 'ssh-keyscan 192.168.105.3 > $HOME/.ssh/known_hosts'
                     sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker pull ttl.sh/goapp-hyusta:1h'
-                    sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker load ttl.sh/goapp-hyusta:1h'
                     sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker run -p 4444:4444 ttl.sh/goapp-hyusta:1h'
                 }
             }
