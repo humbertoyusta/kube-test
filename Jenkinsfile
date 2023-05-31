@@ -11,31 +11,12 @@ pipeline {
                 sh 'docker push ttl.sh/pythonapp-hyusta:1h'
             }
         }
-        stage('Pull docker image') {
+        stage('Deploy to Kubernetes') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'target-key', keyFileVariable: 'keyFile', usernameVariable: 'userName')]) {
-                    sh 'mkdir --parents $HOME/.ssh'
-                    sh 'ssh-keyscan 192.168.105.3 > $HOME/.ssh/known_hosts'
-                    
-                    sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker pull ttl.sh/pythonapp-hyusta:1h'
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'kubeconfig')]) {
+                    sh 'kubectl --kubeconfig=${kubeconfig} run pythonapp --image=ttl.sh/pythonapp-hyusta:1h'
+                    sh 'kubectl --kubeconfig=${kubeconfig} expose pod pythonapp --type=ClusterIP --port=4444'
                 }
-            }
-        }
-        stage('Run docker container') {
-            steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'target-key', keyFileVariable: 'keyFile', usernameVariable: 'userName')]) {
-                    sh 'mkdir --parents $HOME/.ssh'
-                    sh 'ssh-keyscan 192.168.105.3 > $HOME/.ssh/known_hosts'
-
-                    sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker rm --force pythonapp || true'
-                    sh 'ssh -l ${userName} -i ${keyFile} 192.168.105.3 -C docker run --detach --publish 4444:4444 --name pythonapp ttl.sh/pythonapp-hyusta:1h'
-                }
-            }
-        }
-        stage('Health check') {
-            steps {
-                sh 'sleep 5'
-                sh 'curl --silent http://192.168.105.3:4444/api'
             }
         }
     }
