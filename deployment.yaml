@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - image: ttl.sh/pythonapp-hyusta:1h
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         name: pythonapp-hyusta
         resources: {}
         terminationMessagePath: /dev/termination-log
