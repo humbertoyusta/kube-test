@@ -16,8 +16,8 @@ pipeline {
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'kubeconfig')]) {
                     sh 'kubectl --kubeconfig=${kubeconfig} delete deployment pythonapp || true'
                     sh 'kubectl --kubeconfig=${kubeconfig} delete service pythonapp || true'
-                    sh 'kubectl --kubeconfig=${kubeconfig} create deployment pythonapp --image=ttl.sh/pythonapp-hyusta:1h --replicas=2'
-                    sh 'kubectl --kubeconfig=${kubeconfig} expose deployment pythonapp --type=ClusterIP --port=4444 --target-port=4444'
+                    sh 'kubectl --kubeconfig=${kubeconfig} apply --filename deployment.yaml'
+                    sh 'kubectl --kubeconfig=${kubeconfig} apply --filename service.yaml'
                 }
             }
         }
