@@ -16,10 +16,6 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'kubeconfig')]) {
-                    // Delete the deployment and service if they exist
-                    sh 'kubectl --kubeconfig=${kubeconfig} delete deployment pythonapp || true'
-                    sh 'kubectl --kubeconfig=${kubeconfig} delete service pythonapp || true'
-                    // Create the deployment and service
                     sh 'kubectl --kubeconfig=${kubeconfig} apply --filename deployment.yaml'
                     sh 'kubectl --kubeconfig=${kubeconfig} apply --filename service.yaml'
                 }
