@@ -21,6 +21,26 @@ pipeline {
                 }
             }
         }
+        stage('Health Check') {
+            steps {
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'kubeconfig')]) {
+                    script {
+                        // Start port-forwarding
+                        def portForward = sh(script: "kubectl --kubeconfig=${kubeconfig} port-forward service/pythonapp 4444:4444 &", returnStdout: true).trim()
+                        sleep 5 // Sleep for a while to allow port-forwarding to be set up
+                        
+                        // Perform health check
+                        def responseCode = sh(script: "curl -s -o /dev/null -w '%{http_code}' http://localhost:4444/api", returnStdout: true).trim()
+                        if (responseCode != '200') {
+                            error("Health check failed with response code: ${responseCode}")
+                        }
+                        
+                        // Kill the port-forward process
+                        sh 'pkill -f "kubectl --kubeconfig=${kubeconfig} port-forward service/pythonapp 4444:4444"'
+                    }
+                }
+            }
+        }
     }
 }
 
