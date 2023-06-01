@@ -17,6 +17,7 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'kubeconfig')]) {
                     sh 'kubectl --kubeconfig=${kubeconfig} apply --filename deployment.yaml'
+                    sh 'kubectl --kubeconfig=${kubeconfig} apply --filename pvc.yaml'
                     sh 'kubectl --kubeconfig=${kubeconfig} apply --filename service.yaml'
                 }
             }
