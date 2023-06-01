@@ -29,5 +29,12 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+        volumeMounts:
+        - name: log-volume
+          mountPath: /app/logs
       dnsPolicy: ClusterFirst
       restartPolicy: Always
+      volumes:
+      - name: log-volume
+        persistentVolumeClaim:
+          claimName: log-volume-claim
